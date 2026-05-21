@@ -2,8 +2,12 @@ package com.app.ecom;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,15 +21,30 @@ public class UserController {
 
 
     @PostMapping("/api/users")
-    public String createUser(@RequestBody User user){
+    public ResponseEntity<String> createUser(@RequestBody User user){
         userService.addUser(user);
-        return "User added successfully";
+        return new ResponseEntity<>("User added successfully", HttpStatus.CREATED);
     }
 
 
     @GetMapping("/api/users")
-    public List<User> getAllUsers(){
-        return userService.fetchAllUsers();
+    public ResponseEntity<List<User>> getAllUsers(){
+        return new ResponseEntity<>(userService.fetchAllUsers(),HttpStatus.FOUND);
+    }
+
+    @GetMapping("/api/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        return userService.fetchUserById(id)
+                    .map(ResponseEntity::ok)
+                    .orElseGet(()->ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/api/users/{id}")
+    public ResponseEntity<String> updateUserById(@RequestBody User updatedUser, @PathVariable Long id){
+        boolean updated = userService.updateUserById(id, updatedUser);
+        if(updated)
+            return ResponseEntity.ok("User updated successfully");
+        return ResponseEntity.notFound().build();
     }
 
 }
