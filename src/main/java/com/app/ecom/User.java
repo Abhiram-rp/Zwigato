@@ -19,4 +19,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
+    private String phone;
+    private UserRole role = UserRole.CUSTOMER; // Default role is CUSTOMER
 }
