@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ecom.model.User;
+import com.app.ecom.dto.UserRequest;
+import com.app.ecom.dto.UserResponse;
 import com.app.ecom.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,32 +23,34 @@ public class UserController {
 
     private final UserService userService;
 
-
+    //creating new user
     @PostMapping("/api/users")
-    public ResponseEntity<String> createUser(@RequestBody User user){
-        userService.addUser(user);
+    public ResponseEntity<String> createUser(@RequestBody UserRequest userRequest){
+        userService.addUser(userRequest);
         return new ResponseEntity<>("User added successfully", HttpStatus.CREATED);
     }
 
-
+    //fetching all users
     @GetMapping("/api/users")
-    public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<>(userService.fetchAllUsers(),HttpStatus.FOUND);
+    public ResponseEntity<List<UserResponse>> getAllUsers(){
+        return ResponseEntity.status(200).body(userService.fetchAllUsers());
     }
 
+    //fetching user by id
     @GetMapping("/api/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id){
         return userService.fetchUserById(id)
                     .map(ResponseEntity::ok)
-                    .orElseGet(()->ResponseEntity.notFound().build());
+                    .orElseGet(()->ResponseEntity.status(404).build());
     }
 
+    //updating user by id
     @PutMapping("/api/users/{id}")
-    public ResponseEntity<String> updateUserById(@RequestBody User updatedUser, @PathVariable Long id){
-        boolean updated = userService.updateUserById(id, updatedUser);
+    public ResponseEntity<String> updateUserById(@RequestBody UserRequest updatedUserRequest, @PathVariable Long id){
+        boolean updated = userService.updateUserById(id, updatedUserRequest);
         if(updated)
             return ResponseEntity.ok("User updated successfully");
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404).build();
     }
 
 }
