@@ -1,0 +1,117 @@
+User:
+{
+  "firstName": "Ravi",
+  "lastName": "R",
+  "email": "ravi@gmail.com",
+  "phone": "1234567890",
+  "address": {
+    "street": "12 MG Road",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "country": "India",
+    "zipCode": "560001"
+  }
+}
+
+{
+  "firstName": "Priya",
+  "lastName": "Sharma",
+  "email": "priya.sharma@gmail.com",
+  "phone": "9876543210",
+  "address": {
+    "street": "45 Park Street",
+    "city": "Kolkata",
+    "state": "West Bengal",
+    "country": "India",
+    "zipCode": "700016"
+  }
+}
+
+{
+  "firstName": "Arjun",
+  "lastName": "Menon",
+  "email": "arjun.menon@gmail.com",
+  "phone": "9123456789",
+  "address": {
+    "street": "78 Marine Drive",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "country": "India",
+    "zipCode": "400020"
+  }
+}
+
+{
+  "firstName": "Sneha",
+  "lastName": "Patel",
+  "email": "sneha.patel@gmail.com",
+  "phone": "9988776655",
+  "address": {
+    "street": "22 SG Highway",
+    "city": "Ahmedabad",
+    "state": "Gujarat",
+    "country": "India",
+    "zipCode": "380015"
+  }
+}
+
+{
+  "firstName": "Karthik",
+  "lastName": "Iyer",
+  "email": "karthik.iyer@gmail.com",
+  "phone": "9012345678",
+  "address": {
+    "street": "10 Anna Salai",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "zipCode": "600002"
+  }
+}
+
+
+Products :
+{
+  "name": "Wireless Mouse",
+  "description": "Ergonomic wireless mouse with adjustable DPI and silent clicks.",
+  "price": 799.99,
+  "stockQuantity": 50,
+  "category": "Electronics",
+  "imageUrl": "https://example.com/images/wireless-mouse.jpg"
+}
+
+{
+  "name": "Running Shoes",
+  "description": "Lightweight running shoes designed for comfort and durability.",
+  "price": 2499.00,
+  "stockQuantity": 30,
+  "category": "Footwear",
+  "imageUrl": "https://example.com/images/running-shoes.jpg"
+}
+
+{
+  "name": "Coffee Mug",
+  "description": "Ceramic coffee mug with a 350ml capacity and matte finish.",
+  "price": 299.50,
+  "stockQuantity": 120,
+  "category": "Kitchen",
+  "imageUrl": "https://example.com/images/coffee-mug.jpg"
+}
+
+{
+  "name": "Backpack",
+  "description": "Water-resistant backpack with multiple compartments for daily use.",
+  "price": 1199.00,
+  "stockQuantity": 40,
+  "category": "Accessories",
+  "imageUrl": "https://example.com/images/backpack.jpg"
+}
+
+{
+  "name": "Bluetooth Speaker",
+  "description": "Portable Bluetooth speaker with 10-hour battery life.",
+  "price": 1499.99,
+  "stockQuantity": 25,
+  "category": "Electronics",
+  "imageUrl": "https://example.com/images/bluetooth-speaker.jpg"
+}
