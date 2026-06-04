@@ -13,16 +13,19 @@ import com.app.ecom.repository.CartItemRepository;
 import com.app.ecom.repository.ProductRepository;
 import com.app.ecom.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CartService {
    
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
     private final UserRepository userRepository;
 
+    //Service method to add item to cart
     public boolean addToCart(String userId, CartItemRequest request) {
 
         //Look for product
@@ -66,6 +69,29 @@ public class CartService {
         }
 
         return true;
+    }
+
+    //Service method to delete item from cart
+    public boolean deleteItemFromCart(String userId, Long productId) {
+        //Look for user
+        Optional<User> userOpt = userRepository.findById(Long.parseLong(userId));
+        if(userOpt.isEmpty()) {
+            return false;
+        }
+
+        //Look for product
+        Optional<Product> productOpt = productRepository.findById(productId);
+        if(productOpt.isEmpty()) {
+            return false;
+        }
+
+        //Check if both user and product exists, then delete cart item
+        if(userOpt.isPresent() && productOpt.isPresent()) {
+            cartItemRepository.deleteByUserAndProduct(userOpt.get(), productOpt.get());
+            return true;
+        }
+        
+        return false;
     }
 
 }
