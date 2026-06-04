@@ -40,7 +40,7 @@ public class Order {
     private OrderStatus status = OrderStatus.PENDING;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

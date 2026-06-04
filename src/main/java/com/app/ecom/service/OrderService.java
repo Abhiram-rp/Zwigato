@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.app.ecom.dto.OrderItemDTO;
 import com.app.ecom.dto.OrderResponse;
 import com.app.ecom.model.CartItem;
 import com.app.ecom.model.Order;
@@ -58,11 +59,31 @@ public class OrderService {
                                                     order
                                                 ))
                                                 .toList();
-        order.setOrderItems(orderItems);
+        order.setItems(orderItems);
         Order savedOrder = orderRepository.save(order);
 
         //Clear the cart
-        // cartService.clearCart();
+        cartService.clearCart(userId);
+
+        return Optional.of(mapToOrderResponse(savedOrder));
+    }
+
+    private OrderResponse mapToOrderResponse(Order order) {
+        return new OrderResponse(
+            order.getId(),
+            order.getTotalAmount(),
+            order.getStatus(),
+            order.getItems().stream()
+                            .map(orderItem -> new OrderItemDTO(
+                                orderItem.getId(),
+                                orderItem.getProduct().getId(),
+                                orderItem.getQuantity(),
+                                orderItem.getPrice(),
+                                orderItem.getPrice().multiply(new BigDecimal(orderItem.getQuantity()))
+                            )).toList(),
+            order.getCreatedAt()
+        );
+        
     }
 
 }

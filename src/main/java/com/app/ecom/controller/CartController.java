@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ecom.dto.CartItemRequest;
-import com.app.ecom.dto.CartItemResponse;
+import com.app.ecom.model.CartItem;
 import com.app.ecom.service.CartService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class CartController {
     @PostMapping
     public ResponseEntity<String> addToCart(
         @RequestHeader("X-User-ID") String userId,
-        @RequestBody CartItemRequest request) 
+        @RequestBody CartItem request) 
         {
             if(cartService.addToCart(userId, request)){
                 return ResponseEntity.status(201).body("Item added to cart successfully");
@@ -53,7 +52,7 @@ public class CartController {
 
     //endpoint to get all items from cart
     @GetMapping("/items")
-    public ResponseEntity<List<CartItemResponse>> getItemsFromCart(
+    public ResponseEntity<List<CartItem>> getItemsFromCart(
         @RequestHeader("X-User-ID") String userId) 
     {
         return ResponseEntity.status(200).body(cartService.getCartItemsForUser(userId));
