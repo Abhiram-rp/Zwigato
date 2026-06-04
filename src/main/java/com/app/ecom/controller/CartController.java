@@ -1,7 +1,10 @@
 package com.app.ecom.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ecom.dto.CartItemRequest;
+import com.app.ecom.dto.CartItemResponse;
 import com.app.ecom.service.CartService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +37,7 @@ public class CartController {
             return ResponseEntity.status(400).body("Failed to add item to cart");
         }
 
+    //endpoint to remove item from cart
     @DeleteMapping("/items/{productId}")
     public ResponseEntity<Void> removeFromCart(
         @RequestHeader("X-User-ID") String userId,
@@ -45,5 +50,13 @@ public class CartController {
         return ResponseEntity.status(404).build();
     }
     
+
+    //endpoint to get all items from cart
+    @GetMapping("/items")
+    public ResponseEntity<List<CartItemResponse>> getItemsFromCart(
+        @RequestHeader("X-User-ID") String userId) 
+    {
+        return ResponseEntity.status(200).body(cartService.getCartItemsForUser(userId));
+    }
 
 }

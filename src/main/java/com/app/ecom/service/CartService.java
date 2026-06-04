@@ -1,11 +1,14 @@
 package com.app.ecom.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.app.ecom.dto.CartItemRequest;
+import com.app.ecom.dto.CartItemResponse;
 import com.app.ecom.model.CartItem;
 import com.app.ecom.model.Product;
 import com.app.ecom.model.User;
@@ -93,5 +96,31 @@ public class CartService {
         
         return false;
     }
+
+    //Service method to get all cart items for a user
+    public List<CartItemResponse> getCartItemsForUser(String userId) {
+        
+        //Look for user
+        Optional<User> userOpt = userRepository.findById(Long.parseLong(userId));
+        if(userOpt.isEmpty()) {
+            return List.of();
+        }
+
+        //Get cart items for user
+        List<CartItem> cartItems = cartItemRepository.findByUser(userOpt.get());
+        return cartItems.stream()
+                        .map(this::mapToCartItemResponse)
+                        .collect(Collectors.toList());
+    }
+
+    //DTO Mapping method
+
+    public CartItemResponse mapToCartItemResponse(CartItem cartItem) {
+            CartItemResponse response = new CartItemResponse();
+            response.setProductName(cartItem.getProduct().getName());
+            response.setQuantity(cartItem.getQuantity());
+            response.setPrice(cartItem.getPrice());
+            return response;
+        }
 
 }
