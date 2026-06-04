@@ -3,12 +3,8 @@ package com.app.ecom.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 
-import com.app.ecom.dto.CartItemRequest;
-import com.app.ecom.dto.CartItemResponse;
 import com.app.ecom.model.CartItem;
 import com.app.ecom.model.Product;
 import com.app.ecom.model.User;
@@ -29,10 +25,10 @@ public class CartService {
     private final UserRepository userRepository;
 
     //Service method to add item to cart
-    public boolean addToCart(String userId, CartItemRequest request) {
+    public boolean addToCart(String userId, CartItem request) {
 
         //Look for product
-        Optional<Product> productOpt = productRepository.findById(request.getProductId());
+        Optional<Product> productOpt = productRepository.findById(request.getId());
 
         if(productOpt.isEmpty()) {
             return false;
@@ -98,7 +94,7 @@ public class CartService {
     }
 
     //Service method to get all cart items for a user
-    public List<CartItemResponse> getCartItemsForUser(String userId) {
+    public List<CartItem> getCartItemsForUser(String userId) {
         
         //Look for user
         Optional<User> userOpt = userRepository.findById(Long.parseLong(userId));
@@ -108,19 +104,7 @@ public class CartService {
 
         //Get cart items for user
         List<CartItem> cartItems = cartItemRepository.findByUser(userOpt.get());
-        return cartItems.stream()
-                        .map(this::mapToCartItemResponse)
-                        .collect(Collectors.toList());
+        return cartItems;
     }
-
-    //DTO Mapping method
-
-    public CartItemResponse mapToCartItemResponse(CartItem cartItem) {
-            CartItemResponse response = new CartItemResponse();
-            response.setProductName(cartItem.getProduct().getName());
-            response.setQuantity(cartItem.getQuantity());
-            response.setPrice(cartItem.getPrice());
-            return response;
-        }
 
 }
