@@ -18,6 +18,7 @@ public class OrderController {
     
     private final OrderService orderService;
 
+    //Endpoint to place an order
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestHeader("X-User-ID") String userId) {
         return orderService.createOrder(userId)

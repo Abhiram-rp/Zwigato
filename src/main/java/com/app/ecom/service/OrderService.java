@@ -26,6 +26,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
+    //Service method to create an order
     public Optional<OrderResponse> createOrder(String userId) {
         //Check if items are there in cart
         List<CartItem> cartItems = cartService.getCartItemsForUser(userId);
